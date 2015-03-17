@@ -16,6 +16,17 @@ class MaybeTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals($simple->doSomething(), $wrapped->doSomething());
 		$this->assertEquals($simple->doSomethingElse(), $wrapped->doSomethingElse());
 	}
+	
+	public function testMaybeCanWrapNullAndProvideAFakeInstanceOfAClass () {
+		
+		$maybe = new Maybe('Maybe\Tests\Simple');
+		
+		$wrapped = $maybe->wrap(null);
+		
+		$this->assertTrue(method_exists($wrapped,'doSomething'));
+		$this->assertTrue(method_exists($wrapped,'doSomethingElse'));
+		$this->assertInstanceOf('Maybe\Tests\Simple',$wrapped);
+	}
 }
 
 
