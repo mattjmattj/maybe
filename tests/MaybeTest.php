@@ -26,11 +26,35 @@ class MaybeTest extends \PHPUnit_Framework_TestCase {
 		$this->assertTrue(method_exists($wrapped,'doSomething'));
 		$this->assertTrue(method_exists($wrapped,'doSomethingElse'));
 		$this->assertInstanceOf('Maybe\Tests\Simple',$wrapped);
+		$this->assertInstanceOf('Maybe\Tests\SimpleInterface',$wrapped);
+	}
+	
+	public function testMaybeCanWrapNullAndProvideAFakeImplementationOfAnInterface () {
+		
+		$maybe = new Maybe('Maybe\Tests\SimpleInterface');
+		
+		$wrapped = $maybe->wrap(null);
+		
+		$this->assertTrue(method_exists($wrapped,'doSomething'));
+		$this->assertTrue(method_exists($wrapped,'doSomethingElse'));
+		$this->assertInstanceOf('Maybe\Tests\SimpleInterface',$wrapped);
 	}
 }
 
+interface SimpleInterface {
+	/**
+	 * @return int
+	 */ 
+	public function doSomething ();
+	
+	
+	/**
+	 * @return string
+	 */ 
+	public function doSomethingElse ();
+}
 
-class Simple {
+class Simple implements SimpleInterface {
 	/**
 	 * @return int
 	 */ 
