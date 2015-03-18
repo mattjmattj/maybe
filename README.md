@@ -44,7 +44,7 @@ An example is provided in the "example" folder.
 
 # Warning
 
-Not every kind of object should be wrapped. Typically you will want to wrap classes that provide logs, debug, cache, events. You don't want to wrap "useful" classes that actual alter the logic of your code.
+Not every kind of object should be wrapped. Typically you will want to wrap classes that provide logs, debug, cache, events, etc. You don't want to wrap "useful" classes that actually alter the logic of your code.
 
 # License
 
