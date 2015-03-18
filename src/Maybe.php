@@ -111,7 +111,16 @@ class Maybe {
 			case 'float' : return 0.;
 			case 'string' : return '';
 			case 'array' : return [];
-			default : return null;
+			default : return $this->getReturnValueForClassname ($type);
 		}
+	}
+	
+	private function getReturnValueForClassname ($classname) {
+		if (class_exists($classname) || interface_exists($classname)) {
+			$maybe = new static($classname);
+			return $maybe->buildFakeObject();
+		}
+		
+		return null;
 	}
 }

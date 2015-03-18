@@ -33,6 +33,8 @@ namespace Maybe\Tests;
 
 use Maybe\Maybe;
 
+use Maybe\Util\Reflection as TestClass;
+
 class MaybeTest extends \PHPUnit_Framework_TestCase {
 	
 	public function testMaybeCanWrapAnObjectWithoutAlteringIt () {
@@ -84,8 +86,7 @@ class MaybeTest extends \PHPUnit_Framework_TestCase {
 		$this->assertNull($wrapped->commentedButUnknown());
 		
 	}
-	
-	
+
 	public function testMaybeCanProvideAFakeInstanceDirectly () {
 		
 		$maybe = new Maybe('Maybe\Tests\Simple');
@@ -93,6 +94,21 @@ class MaybeTest extends \PHPUnit_Framework_TestCase {
 		$wrapped = $maybe->wrap(null);
 		
 		$this->assertEquals($wrapped, $maybe->buildFakeObject());
+	}
+	
+		
+	public function testFakeInstancesShouldWrapReturnedObjectsWithMaybe () {
+		
+		$maybe = new Maybe('Maybe\Tests\Simple');
+		$fake = $maybe->buildFakeObject();
+		
+		$this->assertInstanceOf('\Maybe\Util\Reflection', $fake->getReflection());
+		$this->assertInstanceOf('Maybe\Tests\AnotherEmptyClass', $fake->getAnotherEmptyClass());
+		$this->assertInternalType('int', $fake->getAnotherEmptyClass()->getThree());
+		$this->assertNotEquals(3, $fake->getAnotherEmptyClass()->getThree());
+		
+		//NOT IMPLEMENTED YET
+		//$this->assertInstanceOf('Maybe\Util\Reflection', $fake->getTestClass());
 		
 	}
 }
@@ -138,4 +154,37 @@ class Simple implements SimpleInterface {
 	
 	/** @return zertyui dzffdfzfonz */
 	public function commentedButUnknown () {}
+	
+	/**
+	 * @return AnotherEmptyClass some random object
+	 */ 
+	public function getAnotherEmptyClass () {
+		return null;
+	}
+	
+	/**
+	 * @return Maybe\Util\Reflection 
+	 */ 
+	public function getReflection () {
+		return null;
+	}
+	
+	/**
+	 * @return TestClass an object using an alias in "use"
+	 */ 
+	public function getTestClass () {
+		return null;
+	}
+	
+}
+
+class AnotherEmptyClass {
+	
+	/**
+	 * @return int 3
+	 */ 
+	public function getThree () {
+		return 3;
+	}
+	
 }
