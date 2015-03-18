@@ -1,6 +1,8 @@
 Maybe
 =========
 
+[![Build Status](https://travis-ci.org/mattjmattj/maybe.svg)](https://travis-ci.org/mattjmattj/maybe)
+
 Maybe wraps a class and provides a way to abstract away error handling when dealing with undefined instances. It might help implement feature switches, dev/prod environments switches, etc.
 
 # Installation
