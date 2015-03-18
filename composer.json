@@ -1,6 +1,6 @@
 {
     "name": "mattjmattj/maybe",
-    "description": "Wraps objects you don't care about",
+    "description": "Fake objects for cleaner code and error handling",
     "require": {
         "phpspec/prophecy": "~1.3"
     },
