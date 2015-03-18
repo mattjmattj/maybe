@@ -39,6 +39,22 @@ class MaybeTest extends \PHPUnit_Framework_TestCase {
 		$this->assertTrue(method_exists($wrapped,'doSomethingElse'));
 		$this->assertInstanceOf('Maybe\Tests\SimpleInterface',$wrapped);
 	}
+	
+	public function testFakeInstancesShouldReturnTheRightTypeAccordingToAnnotations () {
+		
+		$maybe = new Maybe('Maybe\Tests\Simple');
+		
+		$wrapped = $maybe->wrap(null);
+		
+		$this->assertInternalType('int', $wrapped->doSomething());
+		$this->assertInternalType('string', $wrapped->doSomethingElse());
+		$this->assertInternalType('bool', $wrapped->returnSomeBoolean());
+		$this->assertInternalType('float', $wrapped->returnSomeFloatNumber());
+		$this->assertInternalType('array', $wrapped->returnSomeArray());
+		$this->assertNull($wrapped->uncommented());
+		$this->assertNull($wrapped->commentedButUnknown());
+		
+	}
 }
 
 interface SimpleInterface {
@@ -68,4 +84,18 @@ class Simple implements SimpleInterface {
 	public function doSomethingElse () {
 		return 'foobar';
 	}
+	
+	/** @return bool a boolean value */
+	public function returnSomeBoolean () {}
+	
+	/** @return float a float value */
+	public function returnSomeFloatNumber () {}
+	
+	/** @return array an array */
+	public function returnSomeArray () {}
+	
+	public function uncommented () {}
+	
+	/** @return zertyui dzffdfzfonz */
+	public function commentedButUnknown () {}
 }
