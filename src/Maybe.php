@@ -95,9 +95,13 @@ class Maybe {
 
 	private function initProphecyReturnValueForMethod ($method, $type) {
 		$me = $this;
-		$this->prophecy->{$method}()->will(function() use ($type, $me) {
-			return $me->getReturnValueForType($type);	
-		});
+		try {
+			$this->prophecy->{$method}()->will(function () use ($type, $me) {
+				return $me->getReturnValueForType($type);
+			});
+		} catch (\Prophecy\Exception\Prophecy\MethodProphecyException $e) {
+			//at least we tried
+		}
 	}
 	
 	private function getReturnValueForType ($type) {
