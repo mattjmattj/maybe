@@ -62,7 +62,7 @@ class Maybe {
 	/**
 	 * Builds a fake object using Prophecy
 	 */ 
-	private function buildFakeObject () {
+	public function buildFakeObject () {
 		if (!isset($this->prophecy)) {
 			$this->initProphecy();
 		}

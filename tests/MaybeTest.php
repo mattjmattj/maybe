@@ -84,6 +84,17 @@ class MaybeTest extends \PHPUnit_Framework_TestCase {
 		$this->assertNull($wrapped->commentedButUnknown());
 		
 	}
+	
+	
+	public function testMaybeCanProvideAFakeInstanceDirectly () {
+		
+		$maybe = new Maybe('Maybe\Tests\Simple');
+		
+		$wrapped = $maybe->wrap(null);
+		
+		$this->assertEquals($wrapped, $maybe->buildFakeObject());
+		
+	}
 }
 
 interface SimpleInterface {
