@@ -32,27 +32,15 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 namespace Maybe\Util;
 
-class Reflection {
+class Reflection extends \ReflectionClass {
 	
-	/** @var string */ 
-	private $classname;
-	
-	/**
-	 * @param string $classname
-	 */ 
-	public function __construct ($classname) {
-		$this->classname = $classname;
-	}
-
 	/**
 	 * @return array [methodName => type]
 	 */ 
 	public function getReturnTypes () {
 		$returnTypes = [];
 		
-		$reflection = new \ReflectionClass($this->classname);
-		
-		foreach ($reflection->getMethods() as $method) {
+		foreach ($this->getMethods() as $method) {
 			$type = $this->getReturnTypeForMethod($method);
 			$returnTypes[$method->getName()] = $type;
 		}
