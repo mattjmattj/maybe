@@ -34,6 +34,10 @@ namespace Maybe\Util;
 
 class Reflection extends \ReflectionClass {
 	
+	private static $internalTypes = [
+		'int','bool','string','float','binary','array'
+	];
+	
 	/**
 	 * @return array [methodName => type]
 	 */ 
@@ -58,9 +62,33 @@ class Reflection extends \ReflectionClass {
 		
 		$doc = $method->getDocComment();
 		if (preg_match('/@return(?:s)?\s+([^\s]+)/', $doc, $matches)) {
-			return $matches[1];
+			$type = $matches[1];
+			if (!in_array($type, self::$internalTypes)) {
+				$type = $this->resolveTypeAsClass ($type);
+			}
+			return $type;
 		} 
 		
 		return null;
+	}
+	
+	private function resolveTypeAsClass ($type) {
+		if (class_exists($type) || interface_exists($type)) {
+			//$type is already a class
+			return $this->normalizeClassname($type);
+		}
+		
+		$namespace = $this->getNamespaceName();
+		$namespacedType = "$namespace\\$type";
+		if (class_exists($namespacedType) || interface_exists($namespacedType)) {
+			//$type is a classname within the namespace
+			return $this->normalizeClassname($namespacedType);
+		}
+		
+		return null;
+	}
+	
+	private function normalizeClassname ($classname) {
+		return $classname[0] === '\\' ? $classname : '\\'.$classname;
 	}
 }

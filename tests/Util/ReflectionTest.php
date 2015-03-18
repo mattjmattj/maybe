@@ -34,6 +34,8 @@ namespace Maybe\Tests\Util;
 
 use Maybe\Util\Reflection;
 
+use Maybe\Maybe as TestClass;
+
 class ReflectionTest extends \PHPUnit_Framework_TestCase {
 	
 	public function testReflectionShouldFindReturnTypesAccordingToAnnotations () {
@@ -47,7 +49,12 @@ class ReflectionTest extends \PHPUnit_Framework_TestCase {
 			'returnSomeFloatNumber' => 'float',
 			'returnSomeArray' => 'array',
 			'uncommented' => null,
-			'commentedButUnknown' => 'zertyui'
+			'commentedButUnknown' => null,
+			'getAnotherEmptyClass' => '\Maybe\Tests\Util\AnotherEmptyClass',
+			'getMaybe' => '\Maybe\Maybe',
+			
+			// NOT IMPLEMENTED YET
+			//'getTestClass' => 'Maybe\Maybe'
 		];
 		
 		$this->assertEquals($expected, $reflection->getReturnTypes());
@@ -83,4 +90,37 @@ class Simple {
 	
 	/** @return zertyui dzffdfzfonz */
 	public function commentedButUnknown () {}
+	
+	/**
+	 * @return AnotherEmptyClass some random object
+	 */ 
+	public function getAnotherEmptyClass () {
+		return null;
+	}
+	
+	/**
+	 * @return Maybe\Maybe a maybe
+	 */ 
+	public function getMaybe () {
+		return null;
+	}
+	
+	/**
+	 * @return TestClass a object using an alias in "use"
+	 */ 
+	//public function getTestClass () {
+	//	return null;
+	//}
+	
+}
+
+class AnotherEmptyClass {
+	
+	/**
+	 * @return int 3
+	 */ 
+	public function getThree () {
+		return 3;
+	}
+	
 }
