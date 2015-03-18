@@ -51,7 +51,8 @@ class Reflection extends \ReflectionClass {
 	private function getReturnTypeForMethod (\ReflectionMethod $method) {
 		if ($method->isConstructor() 
 			|| $method->isDestructor()
-			|| $method->isStatic()) {
+			|| $method->isStatic()
+			|| $method->isFinal()) {
 			return null;
 		}
 		
