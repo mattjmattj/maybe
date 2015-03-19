@@ -45,7 +45,10 @@ $wrapped->getSomeService()->doSomeJob();
 
 # Example
 
-An example is provided in the "example" folder.
+Examples are provided in the "example" folder:
+
+- **Log** : An example of how to use Maybe with an IoC container to wrap a "log" feature and write code with no worries.
+- **Email** : An example of how to use Maybe to create fake objects from interfaces only. An example of "deep" wrapping.
 
 # Warning
 
