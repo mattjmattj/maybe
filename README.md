@@ -10,7 +10,7 @@ Maybe wraps a class and provides a way to abstract away error handling when deal
 with composer
 
 ```
-composer.phar require mattjmattj/maybe ~0.1
+composer.phar require mattjmattj/maybe ~1.0
 ```
 
 # Basic usage
