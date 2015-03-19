@@ -36,6 +36,11 @@ $wrapped = $maybe->wrap($someContainer->getSomeClassInstance());
  */
 $wrapped->doSomeInterestingThing();
 
+/*
+ * You can also call a method at a deeper level. Maybe will wrap returned types
+ * if it finds proper @return annotations
+ */
+$wrapped->getSomeService()->doSomeJob();
 ```
 
 # Example
