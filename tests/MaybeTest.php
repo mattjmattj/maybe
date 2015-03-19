@@ -163,7 +163,7 @@ class Simple implements SimpleInterface {
 	}
 	
 	/**
-	 * @return Maybe\Util\Reflection 
+	 * @return \Maybe\Util\Reflection
 	 */ 
 	public function getReflection () {
 		return null;

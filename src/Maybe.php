@@ -95,32 +95,6 @@ class Maybe {
 
 	private function initProphecyReturnValueForMethod ($method, $type) {
 		$me = $this;
-		try {
-			$this->prophecy->{$method}()->will(function () use ($type, $me) {
-				return $me->getReturnValueForType($type);
-			});
-		} catch (\Prophecy\Exception\Prophecy\MethodProphecyException $e) {
-			//at least we tried
-		}
-	}
-	
-	private function getReturnValueForType ($type) {
-		switch ($type) {
-			case 'bool' : return false;
-			case 'int' : return 0;
-			case 'float' : return 0.;
-			case 'string' : return '';
-			case 'array' : return [];
-			default : return $this->getReturnValueForClassname ($type);
-		}
-	}
-	
-	private function getReturnValueForClassname ($classname) {
-		if (class_exists($classname) || interface_exists($classname)) {
-			$maybe = new static($classname);
-			return $maybe->buildFakeObject();
-		}
-		
-		return null;
+		$this->prophecy->{$method}()->will(new \Maybe\Util\TypeReturnValuePromise($type));
 	}
 }

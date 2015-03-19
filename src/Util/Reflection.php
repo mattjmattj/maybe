@@ -45,6 +45,12 @@ class Reflection extends \ReflectionClass {
 		$returnTypes = [];
 		
 		foreach ($this->getMethods() as $method) {
+			if ($method->isConstructor() 
+			|| $method->isDestructor()
+			|| $method->isStatic()
+			|| $method->isFinal()) {
+				continue;
+			}
 			$type = $this->getReturnTypeForMethod($method);
 			$returnTypes[$method->getName()] = $type;
 		}
@@ -53,12 +59,7 @@ class Reflection extends \ReflectionClass {
 	}
 
 	private function getReturnTypeForMethod (\ReflectionMethod $method) {
-		if ($method->isConstructor() 
-			|| $method->isDestructor()
-			|| $method->isStatic()
-			|| $method->isFinal()) {
-			return null;
-		}
+		
 		
 		$doc = $method->getDocComment();
 		if (preg_match('/@return(?:s)?\s+([^\s]+)/', $doc, $matches)) {
