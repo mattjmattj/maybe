@@ -111,6 +111,13 @@ class MaybeTest extends \PHPUnit_Framework_TestCase {
 		//$this->assertInstanceOf('Maybe\Util\Reflection', $fake->getTestClass());
 		
 	}
+	
+	public function testFakeInstancesShouldAcceptAnyNumberOfArgument () {
+		$maybe = new Maybe('Maybe\Tests\Simple');
+		$fake = $maybe->buildFakeObject();
+		
+		$this->assertInternalType('int', $fake->getAnotherEmptyClass()->getThree(1,2,3,'foo'));
+	}
 }
 
 interface SimpleInterface {

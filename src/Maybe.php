@@ -95,6 +95,6 @@ class Maybe {
 
 	private function initProphecyReturnValueForMethod ($method, $type) {
 		$me = $this;
-		$this->prophecy->{$method}()->will(new \Maybe\Util\TypeReturnValuePromise($type));
+		$this->prophecy->{$method}(\Prophecy\Argument::cetera())->will(new \Maybe\Util\TypeReturnValuePromise($type));
 	}
 }
