@@ -59,8 +59,6 @@ class Reflection extends \ReflectionClass {
 	}
 
 	private function getReturnTypeForMethod(\ReflectionMethod $method) {
-		
-		
 		$doc = $method->getDocComment();
 		if (preg_match('/@return(?:s)?\s+([^\s]+)/', $doc, $matches)) {
 			$type = $matches[1];
