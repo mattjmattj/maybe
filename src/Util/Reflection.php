@@ -55,7 +55,7 @@ class Reflection extends \ReflectionClass {
 		return $returnTypes;
 	}
 
-	private function isMethodValid (\ReflectionMethod $method) {
+	private function isMethodValid(\ReflectionMethod $method) {
 		return !($method->isConstructor() 
 			|| $method->isDestructor()
 			|| $method->isStatic()
@@ -80,7 +80,7 @@ class Reflection extends \ReflectionClass {
 		return null;
 	}
 	
-	private function isTypeInternal ($type) {
+	private function isTypeInternal($type) {
 		return in_array($type, self::$internalTypes);
 	}
 	
@@ -100,7 +100,7 @@ class Reflection extends \ReflectionClass {
 		return null;
 	}
 	
-	private function isExistingClassOrInterface ($name) {
+	private function isExistingClassOrInterface($name) {
 		return class_exists($name) || interface_exists($name);
 	}
 	
