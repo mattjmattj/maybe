@@ -45,10 +45,7 @@ class Reflection extends \ReflectionClass {
 		$returnTypes = [];
 		
 		foreach ($this->getMethods() as $method) {
-			if ($method->isConstructor() 
-			|| $method->isDestructor()
-			|| $method->isStatic()
-			|| $method->isFinal()) {
+			if (!$this->isMethodValid($method)) {
 				continue;
 			}
 			$type = $this->getReturnTypeForMethod($method);
@@ -58,33 +55,53 @@ class Reflection extends \ReflectionClass {
 		return $returnTypes;
 	}
 
+	private function isMethodValid (\ReflectionMethod $method) {
+		return !($method->isConstructor() 
+			|| $method->isDestructor()
+			|| $method->isStatic()
+			|| $method->isFinal());
+	}
+
 	private function getReturnTypeForMethod(\ReflectionMethod $method) {
+		$type = $this->extractReturnTypeFromAnnotations($method);
+		
+		if (is_null($type) || $this->isTypeInternal($type)) {
+			return $type;
+		}
+		
+		return $this->resolveTypeAsClass($type);
+	}
+	
+	private function extractReturnTypeFromAnnotations(\ReflectionMethod $method) {
 		$doc = $method->getDocComment();
 		if (preg_match('/@return(?:s)?\s+([^\s]+)/', $doc, $matches)) {
-			$type = $matches[1];
-			if (!in_array($type, self::$internalTypes)) {
-				$type = $this->resolveTypeAsClass($type);
-			}
-			return $type;
-		} 
-		
+			return $matches[1];
+		}
 		return null;
 	}
 	
+	private function isTypeInternal ($type) {
+		return in_array($type, self::$internalTypes);
+	}
+	
 	private function resolveTypeAsClass($type) {
-		if (class_exists($type) || interface_exists($type)) {
+		if ($this->isExistingClassOrInterface($type)) {
 			//$type is already a class
 			return $this->normalizeClassname($type);
 		}
 		
 		$namespace = $this->getNamespaceName();
 		$namespacedType = "$namespace\\$type";
-		if (class_exists($namespacedType) || interface_exists($namespacedType)) {
+		if ($this->isExistingClassOrInterface($namespacedType)) {
 			//$type is a classname within the namespace
 			return $this->normalizeClassname($namespacedType);
 		}
 		
 		return null;
+	}
+	
+	private function isExistingClassOrInterface ($name) {
+		return class_exists($name) || interface_exists($name);
 	}
 	
 	private function normalizeClassname($classname) {
