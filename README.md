@@ -2,6 +2,8 @@ Maybe
 =========
 
 [![Build Status](https://travis-ci.org/mattjmattj/maybe.svg)](https://travis-ci.org/mattjmattj/maybe)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mattjmattj/maybe/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/mattjmattj/maybe/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/mattjmattj/maybe/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/mattjmattj/maybe/?branch=master)
 
 Maybe wraps a class and provides a way to abstract away error handling when dealing with undefined instances. It might help implement feature switches, dev/prod environments switches, etc.
 
