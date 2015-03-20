@@ -37,7 +37,7 @@ class Maybe {
 	/** @var string */ 
 	private $classname;
 	
-	/** @var Prophecy */
+	/** @var \Prophecy\Prophecy\ObjectProphecy */
 	private $prophecy;
 	
 	/**
