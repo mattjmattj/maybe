@@ -35,13 +35,13 @@ namespace Maybe\Util;
 class Reflection extends \ReflectionClass {
 	
 	private static $internalTypes = [
-		'int','bool','string','float','binary','array'
+		'int', 'bool', 'string', 'float', 'binary', 'array'
 	];
 	
 	/**
 	 * @return array [methodName => type]
 	 */ 
-	public function getReturnTypes () {
+	public function getReturnTypes() {
 		$returnTypes = [];
 		
 		foreach ($this->getMethods() as $method) {
@@ -58,14 +58,14 @@ class Reflection extends \ReflectionClass {
 		return $returnTypes;
 	}
 
-	private function getReturnTypeForMethod (\ReflectionMethod $method) {
+	private function getReturnTypeForMethod(\ReflectionMethod $method) {
 		
 		
 		$doc = $method->getDocComment();
 		if (preg_match('/@return(?:s)?\s+([^\s]+)/', $doc, $matches)) {
 			$type = $matches[1];
 			if (!in_array($type, self::$internalTypes)) {
-				$type = $this->resolveTypeAsClass ($type);
+				$type = $this->resolveTypeAsClass($type);
 			}
 			return $type;
 		} 
@@ -73,7 +73,7 @@ class Reflection extends \ReflectionClass {
 		return null;
 	}
 	
-	private function resolveTypeAsClass ($type) {
+	private function resolveTypeAsClass($type) {
 		if (class_exists($type) || interface_exists($type)) {
 			//$type is already a class
 			return $this->normalizeClassname($type);
@@ -89,7 +89,7 @@ class Reflection extends \ReflectionClass {
 		return null;
 	}
 	
-	private function normalizeClassname ($classname) {
-		return $classname[0] === '\\' ? $classname : '\\'.$classname;
+	private function normalizeClassname($classname) {
+		return $classname[0] === '\\' ? $classname : '\\' . $classname;
 	}
 }

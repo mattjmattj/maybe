@@ -43,26 +43,26 @@ class Maybe {
 	/**
 	 * @param string $classname - the name of the class/interface we want to wrap
 	 */ 
-	public function __construct ($classname) {
+	public function __construct($classname) {
 		$this->classname = $classname;
 	}
 	
 	/**
 	 * @param mixed $object - the object we want to wrap. May be null
 	 */ 
-	public function wrap ($object) {
+	public function wrap($object) {
 
 		if (!is_null($object)) {
 			return $object;
 		}
 
-		return $this->buildFakeObject ();
+		return $this->buildFakeObject();
 	}
 	
 	/**
 	 * Builds a fake object using Prophecy
 	 */ 
-	public function buildFakeObject () {
+	public function buildFakeObject() {
 		if (!isset($this->prophecy)) {
 			$this->initProphecy();
 		}
@@ -73,18 +73,18 @@ class Maybe {
 	/**
 	 * Prophecy initialization
 	 */ 
-	private function initProphecy () {
+	private function initProphecy() {
 		$prophet = new \Prophecy\Prophet();
 		$this->prophecy = $prophet->prophesize($this->classname);
 		
-		$this->initProphecyReturnValues ();
+		$this->initProphecyReturnValues();
 	}
 	
 	/**
 	 * Tries to set a coherent return value for each of the faked method, using
 	 * Reflection API.
 	 */ 
-	private function initProphecyReturnValues () {
+	private function initProphecyReturnValues() {
 		$reflection = new \Maybe\Util\Reflection($this->classname);
 		
 		$returnTypes = $reflection->getReturnTypes();
@@ -93,7 +93,7 @@ class Maybe {
 		}
 	}
 
-	private function initProphecyReturnValueForMethod ($method, $type) {
+	private function initProphecyReturnValueForMethod($method, $type) {
 		$this->prophecy->{$method}(\Prophecy\Argument::cetera())
 			->will(new \Maybe\Util\TypeReturnValuePromise($type));
 	}

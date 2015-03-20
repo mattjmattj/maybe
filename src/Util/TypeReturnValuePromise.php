@@ -19,18 +19,18 @@ class TypeReturnValuePromise implements \Prophecy\Promise\PromiseInterface
 		return $this->getReturnValueForType($this->type);
 	}
 	
-	private function getReturnValueForType ($type) {
+	private function getReturnValueForType($type) {
 		switch ($type) {
 			case 'bool': return false;
 			case 'int': return 0;
 			case 'float': return 0.;
 			case 'string': return '';
 			case 'array': return [];
-			default: return $this->getReturnValueForClassname ($type);
+			default: return $this->getReturnValueForClassname($type);
 		}
 	}
 	
-	private function getReturnValueForClassname ($classname) {
+	private function getReturnValueForClassname($classname) {
 		if (class_exists($classname) || interface_exists($classname)) {
 			$maybe = new \Maybe\Maybe($classname);
 			return $maybe->buildFakeObject();
