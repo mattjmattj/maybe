@@ -21,12 +21,12 @@ class TypeReturnValuePromise implements \Prophecy\Promise\PromiseInterface
 	
 	private function getReturnValueForType ($type) {
 		switch ($type) {
-			case 'bool' : return false;
-			case 'int' : return 0;
-			case 'float' : return 0.;
-			case 'string' : return '';
-			case 'array' : return [];
-			default : return $this->getReturnValueForClassname ($type);
+			case 'bool': return false;
+			case 'int': return 0;
+			case 'float': return 0.;
+			case 'string': return '';
+			case 'array': return [];
+			default: return $this->getReturnValueForClassname ($type);
 		}
 	}
 	
