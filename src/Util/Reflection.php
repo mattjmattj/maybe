@@ -52,7 +52,7 @@ class Reflection extends \ReflectionClass {
 				continue;
 			}
 			$type = $this->getReturnTypeForMethod($method);
-			$returnTypes[$method->getName()] = $type;
+			$returnTypes[$method->name] = $type;
 		}
 		
 		return $returnTypes;
